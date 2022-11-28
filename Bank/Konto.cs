@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Bank
 {
-    internal class Konto
+    public class Konto
     {
         private int guthaben;
+        private int kontonr;
 
         public int Guthaben
         {
@@ -13,12 +15,27 @@ namespace Bank
                 return guthaben;
             }
         }
+        public int KontoNr
+        {
+            get
+            {
+                return kontonr;
+            }
+        }
 
         public Konto(int guthaben)
         {
-            this.guthaben = guthaben;
+            if (guthaben < 0)
+            {
+                throw new ArgumentOutOfRangeException("Konto kann nicht mit negative Guthaben geoffnet werden");
+            }
+            else if (guthaben >= 0)
+            {
+                this.guthaben = guthaben;
+                kontonr++;
+            }
         }
-
+  
         public void Einzahlen(int betrag)
         {
             guthaben += betrag;
